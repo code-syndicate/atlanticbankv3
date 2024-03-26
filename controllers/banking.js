@@ -52,7 +52,7 @@ if (process.env.NODE_ENV === "development") {
 const photographUpload = multer({
   fileFilter,
   storage,
-  limits: { fileSize: 1024 * 1024 * 2 },
+  limits: { fileSize: 1024 * 1024 * 5 },
 }).single("photograph");
 
 // amazon ends
@@ -411,7 +411,7 @@ const signUpPOST = [
       let fileUrl;
       if (process.env.NODE_ENV === "development") {
         fileUrl = req.file ? req.file.path : null;
-      } else if (process.env.NODE_ENV === "production") {
+      } else {
         fileUrl = req.file ? req.file.location : null;
       }
       //   console.log("\n\n", req.file, req.body);
