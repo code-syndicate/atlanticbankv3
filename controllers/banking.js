@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === "development") {
 } else {
   storage = multerS3({
     s3,
-    bucket: "shared-testing-bucket",
+    bucket: "bucket-1",
     acl: "public-read",
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
