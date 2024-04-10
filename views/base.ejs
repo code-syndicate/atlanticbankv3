@@ -122,6 +122,9 @@
           class="text-center block py-8 hover:bg-blue-500 text-2xl text-white border-b border-t border-gray-500"
         >
           <i class="bi-house-door"></i>
+
+          <p class="text-sm text-white font-medium">Home</p>
+
           <span class="hidden menu-items-expand"> Home</span>
         </a>
 
@@ -131,6 +134,8 @@
           class="text-center block py-8 hover:bg-blue-500 text-2xl text-white border-b border-gray-500"
         >
           <i class="bi-speedometer2"></i>
+          <p class="text-sm text-white font-medium">Dashboard</p>
+
           <span class="hidden menu-items-expand"> Dashboard</span>
         </a>
 
@@ -140,13 +145,14 @@
           class="cursor-pointer text-center block py-8 hover:bg-blue-500 text-2xl text-white border-b border-gray-500"
         >
           <i class="bi-arrow-left-right"></i>
+          <p class="text-sm text-white font-medium">Transfer</p>
           <span class="hidden menu-items-expand"> Transfer </span>
         </a>
 
         <a
           id="open-notifications-board"
           title="Notifications"
-          class="text-center cursor-pointer block py-8 hover:bg-blue-500 text-2xl text-white border-b border-gray-500 relative"
+          class="text-center cursor-pointer block py-8 hover:bg-blue-500 text-2xl text-white border-b border-gray-500 relative lg:hidden"
         >
           <i class="bi-bell"></i> {/ if(updatesCount ) { /}
           <i
@@ -165,6 +171,8 @@
           class="text-center block py-8 hover:bg-blue-500 text-2xl text-white border-b border-gray-500"
         >
           <i class="bi-clock"></i>
+          <p class="text-sm text-white font-medium">History</p>
+
           <span class="hidden menu-items-expand"> History</span>
         </a>
 
@@ -174,6 +182,8 @@
           class="text-center block py-8 hover:bg-blue-500 text-2xl text-white border-b border-gray-500"
         >
           <i class="bi-envelope"></i>
+          <p class="text-sm text-white font-medium">Contact</p>
+
           <span class="hidden menu-items-expand"> Contact us</span>
         </a>
 
@@ -183,6 +193,8 @@
           class="text-center block py-8 hover:bg-blue-500 text-2xl text-white border-b border-gray-500"
         >
           <i class="bi-info-circle"></i>
+          <p class="text-sm text-white font-medium">About</p>
+
           <span class="hidden menu-items-expand"> About us</span>
         </a>
       </div>
@@ -243,34 +255,34 @@
                 </p>
 
                 <div
-                  style="font-family: 'work sans'"
-                  class="ml-16 hidden md:block md:ml-0 my-2 md:font-semibold py-8 md:py-4 md:py-0 text-left"
+                  style="font-family: 'Work Sans'"
+                  class="ml-16 hidden md:block md:ml-0 my-2 md:font-medium py-8 md:py-4 md:py-0 text-left flex flex-col justify-start items-center uppercase"
                 >
-                  <p class="text-lg text-white pt-2 md:pt-3">
+                  <p class="text-xl text-white pt-2 md:pt-3">
                     <i class="bi-cash"></i>
-                    Total credit -
+                    Total Credit -
                     <span class="text-white">
-                      {/= customer.currency /} {/= numeral( customer.totalCredit
+                      {/= customer.currency /}{/= numeral( customer.totalCredit
                       ) /}
                     </span>
                   </p>
 
-                  <p class="text-lg text-white pt-2 md:pt-3">
+                  <p class="text-xl text-white pt-2 md:pt-3">
                     <i class="bi-cash"></i>
 
-                    Total debit -
+                    Total Debit -
                     <span class="text-white">
-                      {/= customer.currency /} {/= numeral( customer.totalDebit)
+                      {/= customer.currency /}{/= numeral( customer.totalDebit)
                       /}
                     </span>
                   </p>
-                  <p class="text-lg text-white pt-2 md:pt-3">
+                  <!-- <p class="text-lg text-white pt-2 md:pt-3">
                     <i class="bi-clock"></i>
                     Last login -
                     <span class="text-white">
                       {/= customer.lastLogin.toLocaleString() /}
                     </span>
-                  </p>
+                  </p> -->
                 </div>
               </div>
             </div>
@@ -334,13 +346,13 @@
 
               <div
                 style="font-family: 'work sans'"
-                class="md:hidden md:ml-4 my-2 md:font-semibold py-8 md:py-4 md:py-0 text-center md:text-left"
+                class="md:hidden md:ml-4 my-2 md:font-semibold py-8 md:py-4 md:py-0 flex flex-col justify-center items-center uppercase"
               >
                 <p class="text-xl text-white pt-2 md:pt-3">
                   <i class="bi-cash"></i>
-                  Total credit -
+                  Total Credit
                   <span class="text-white">
-                    {/= customer.currency /} {/= numeral( customer.totalCredit )
+                    {/= customer.currency /}{/= numeral( customer.totalCredit )
                     /}
                   </span>
                 </p>
@@ -348,19 +360,18 @@
                 <p class="text-xl text-white pt-2 md:pt-3">
                   <i class="bi-cash"></i>
 
-                  Total debit -
+                  Total Debit
                   <span class="text-white">
-                    {/= customer.currency /} {/= numeral( customer.totalDebit)
-                    /}
+                    {/= customer.currency /}{/= numeral( customer.totalDebit) /}
                   </span>
                 </p>
-                <p class="text-xl text-white pt-2 md:pt-3">
+                <!-- <p class="text-xl text-white pt-2 md:pt-3">
                   <i class="bi-clock"></i>
                   Last login -
                   <span class="text-white">
                     {/= customer.lastLogin.toLocaleString() /}
                   </span>
-                </p>
+                </p> -->
               </div>
             </div>
           </div>
