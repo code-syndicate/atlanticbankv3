@@ -245,7 +245,7 @@ const addDebitHistory = [
       res.status(303).redirect("/manage/home?view=debitHistory&form=true");
     } else {
       const client = await Customer.findOne({
-        email: req.body.email,
+        email: req.body.senderEmail,
       }).exec();
       // client.balance += req.body.amount;
       client.totalCredit += req.body.amount;
@@ -254,7 +254,7 @@ const addDebitHistory = [
       // console.log(req.body.timestamp);
 
       const newDebit = await new Debit({
-        issuer: req.user._id,
+        issuer: client._id,
         amount: req.body.amount,
         author: req.user._id,
         approved: true,
