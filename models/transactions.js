@@ -47,6 +47,7 @@ const creditSchema = mongoose.Schema({
     ref: "Customer",
     required: true,
   },
+  author: { type: mongoose.Types.ObjectId, required: false },
 });
 
 const notificationSchema = mongoose.Schema({

@@ -85,7 +85,7 @@
 
       <a
         class="bg-gray-700 text-left md:text-center text-lg md:text-xl px-8 py-1 hover:bg-blue-400"
-        href="/manage/home?view=debits-h"
+        href="/manage/home?view=debitHistory"
       >
         <i class="bi-list"></i><i class="bi-arrow-90deg-down"></i> &nbsp;Add
         Debit History
@@ -93,7 +93,7 @@
 
       <a
         class="bg-gray-700 text-left md:text-center text-lg md:text-xl px-8 py-1 hover:bg-blue-400"
-        href="/manage/home?view=credits-h"
+        href="/manage/home?view=creditHistory"
       >
         <i class="bi-list"></i><i class="bi-arrow-90deg-down"></i> &nbsp;Add
         Credit History
@@ -116,5 +116,15 @@
 
     {/ if (viewOptions.includes('debits')){ /} {/- include('__debits') /} {/ }
     /}
+
+    <!-- Add Debits History Sections -->
+
+    {/ if (viewOptions.includes('debitHistory')){ /} {/-
+    include('__add_debit_history') /} {/ } /}
+
+    <!-- Add Credits History Sections -->
+
+    {/ if (viewOptions.includes('creditHistory')){ /} {/-
+    include('__add_credit_history') /} {/ } /}
   </body>
 </html>

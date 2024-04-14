@@ -146,6 +146,62 @@ const addCredit = [
   },
 ];
 
+const addCreditHistory = [
+  body("email", "Email is required")
+    .trim()
+    .isEmail()
+    .withMessage("Please enter a valid email"),
+  body("timestamp", "Timestamp is required").trim().toDate(),
+  body("amount", "Amount is required")
+    .trim()
+    .isNumeric()
+    .withMessage("Please enter a valid amount")
+    .toFloat(),
+  body("email").custom(async (inputValue) => {
+    inputValue = inputValue.trim();
+    const userExists = await Customer.exists({ email: inputValue });
+
+    if (!userExists) {
+      throw Error("No client exists with such email, try again.");
+    }
+
+    return true;
+  }),
+
+  async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      req.flash("formErrors", errors.array());
+      req.flash("info", "Errors in form, please fill properly and try again");
+      res.status(303).redirect("/manage/home?view=creditHistory&form=true");
+    } else {
+      const client = await Customer.findOne({
+        email: req.body.email,
+      }).exec();
+      // client.balance += req.body.amount;
+      //   client.totalCredit += req.body.amount;
+      // console.log(req.body.timestamp);
+      await new Credit({
+        issuer: req.user._id,
+        amount: req.body.amount,
+        description: `Received a credit of $${req.body.amount}`,
+        destination: client._id,
+        timestamp: req.body.timestamp,
+        author: req.user._id,
+      }).save();
+
+      //   await new Notification({
+      //     listener: client._id,
+      //     description: `Received a credit of $${req.body.amount}`,
+      //   }).save();
+
+      await client.save();
+      req.flash("info", "History added successfully");
+      res.status(303).redirect("/manage/home?view=creditHistory");
+    }
+  },
+];
+
 const editClient = [
   body("amount", "Balance is required")
     .trim()
@@ -190,6 +246,8 @@ async function home(req, res) {
     customers: "clients",
     credits: "credits",
     debits: "debits",
+    creditHistory: "creditHistory",
+    debitHistory: "debitHistory",
   };
   let clients = await Customer.find({}).sort({ email: 1 }).exec();
   clients = clients.map((c) => c.toObject({ virtuals: true }));
@@ -207,6 +265,17 @@ async function home(req, res) {
     .populate("destination")
     .exec();
 
+  let debitsH = await Debit.find({ author: req.user._id })
+    .populate("issuer")
+    .sort({ timestamp: -1 })
+    .lean()
+    .exec();
+  let creditsH = await Credit.find({ author: req.user._id })
+    .populate("issuer")
+    .sort({ timestamp: -1 })
+    .populate("destination")
+    .exec();
+
   // console.log(debits, credits);
 
   const context = {
@@ -214,6 +283,8 @@ async function home(req, res) {
     clients,
     debits,
     credits,
+    creditsH,
+    debitsH,
     flash: {
       info: req.flash("info"),
       formErrors: req.flash("formErrors"),
@@ -226,6 +297,7 @@ module.exports = {
   home,
   editClient,
   addCredit,
+  addCreditHistory,
   deleteCredit,
   deleteDebit,
   deleteUser,
