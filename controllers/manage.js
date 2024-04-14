@@ -184,7 +184,7 @@ const addCreditHistory = [
 
       // console.log(req.body.timestamp);
       await new Credit({
-        issuer: req.user._id,
+        issuer: client._id,
         amount: req.body.amount,
         description: `Received a credit of $${req.body.amount}`,
         destination: client._id,
