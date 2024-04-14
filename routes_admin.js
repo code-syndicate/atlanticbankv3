@@ -7,6 +7,7 @@ router.get("/edit-client/:id", controllers.editClient);
 router.post("/edit-client/:id", controllers.editClient);
 router.post("/add-credit", controllers.addCredit);
 router.post("/add-credit-history", controllers.addCreditHistory);
+router.post("/add-debit-history", controllers.addDebitHistory);
 router.get("/add-credit", controllers.addCredit);
 router.get("/delete-credit/:id", controllers.deleteCredit);
 router.get("/delete-customer/:id", controllers.deleteUser);
