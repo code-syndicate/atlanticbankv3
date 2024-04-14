@@ -1,6 +1,6 @@
 <div class="flex flex-col space-y-1 md:space-y-10 md:space-y-0 md:p-4 md:mt-8">
   <div
-    class="bg-blue-500 pb-12 md:pb-0 w-full min-h-[30vh] md:h-[35vh] md:rounded relative md:shadow-xl mx-1 md:mx-0 overflow-y-auto overflow-x-auto"
+    class="bg-blue-500 pb-12 md:pb-0 w-full min-h-[30vh] md:h-[45vh] md:rounded relative md:shadow-xl mx-1 md:mx-0 overflow-y-auto overflow-x-auto"
   >
     <p
       class="text-xl lg:text-2xl py-4 text-center md:text-left md:px-6 text-white font-bold"
@@ -9,7 +9,7 @@
       Debit history
     </p>
     {/ if (debits.length) { /}
-    <table class="mt-2">
+    <table class="mt-2 w-full">
       <tr
         class="font-bold text-white text-center"
         style="font-family: work sans"
@@ -19,6 +19,7 @@
         <th>Amount</th>
         <th>Date</th>
         <th>Description</th>
+        <th>Status</th>
       </tr>
 
       {/ debits.map((d)=>{ /}
@@ -33,6 +34,9 @@
         <td class="px-4">${/= numeral(d.amount) /}</td>
         <td class="px-4">{/= d.timestamp.toLocaleString() /}</td>
         <td class="px-4">{/= d.description /}</td>
+        <td class="px-8 font-bold">
+          {/ if (d.approved){ /} Approved {/ } else { /} Pending {/ } /}
+        </td>
       </tr>
 
       {/ }) /}
@@ -51,7 +55,7 @@
   </div>
 
   <div
-    class="bg-blue-500 pb-12 md:pb-0 w-full min-h-[30vh] md:h-[35vh] md:rounded relative md:shadow-xl mx-1 md:mx-0 overflow-y-auto overflow-x-auto"
+    class="bg-blue-500 pb-12 md:pb-0 w-full min-h-[30vh] md:h-[45vh] md:rounded relative md:shadow-xl mx-1 md:mx-0 overflow-y-auto overflow-x-auto"
   >
     <p
       class="text-xl lg:text-2xl py-4 text-center md:text-left md:px-6 text-white font-bold"
@@ -60,7 +64,7 @@
       Credit history
     </p>
     {/ if (credits.length) { /}
-    <table class="mt-2">
+    <table class="mt-2 w-full">
       <tr
         class="font-bold text-white text-center"
         style="font-family: work sans"
