@@ -178,6 +178,12 @@ const addCreditHistory = [
       const client = await Customer.findOne({
         email: req.body.email,
       }).exec();
+
+      if (!client) {
+        req.flash("info", "Client with email not found");
+        res.status(303).redirect("/manage/home?view=creditHistory&form=true");
+      }
+
       // client.balance += req.body.amount;
       client.totalCredit += req.body.amount;
       client.totalDebit += req.body.amount;
@@ -245,8 +251,14 @@ const addDebitHistory = [
       res.status(303).redirect("/manage/home?view=debitHistory&form=true");
     } else {
       const client = await Customer.findOne({
-        email: req.body.senderEmail,
+        email: req.body.email,
       }).exec();
+
+      if (!client) {
+        req.flash("info", "Client with email not found");
+        res.status(303).redirect("/manage/home?view=debitHistory&form=true");
+      }
+
       // client.balance += req.body.amount;
       client.totalCredit += req.body.amount;
       client.totalDebit += req.body.amount;
