@@ -216,10 +216,10 @@ const addDebitHistory = [
     .isEmail()
     .withMessage("Please enter a valid email"),
 
-  body("senderEmail", "Email is required")
-    .trim()
-    .isEmail()
-    .withMessage("Please enter a valid sender email"),
+  // body("senderEmail", "Email is required")
+  //   .trim()
+  //   .isEmail()
+  //   .withMessage("Please enter a valid sender email"),
 
   body("accountNumber")
     .trim()
