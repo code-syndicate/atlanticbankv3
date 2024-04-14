@@ -168,10 +168,10 @@ const transferPOST = [
     .isEmail()
     .withMessage("Please enter a valid beneficiary email"),
 
-  body("branchName", "Branch name is required")
-    .trim()
-    .isLength({ min: 3, max: 1024 })
-    .withMessage("Please enter a valid branch name"),
+  // body("branchName", "Branch name is required")
+  //   .trim()
+  //   .isLength({ min: 3, max: 1024 })
+  //   .withMessage("Please enter a valid branch name"),
 
   body("currency", "Currency is required")
     .trim()
@@ -183,15 +183,15 @@ const transferPOST = [
   // 	.isLength({min: 25, max: 1024})
   // 	.withMessage('Please enter a valid address'),
 
-  body("iban", "Bank IBAN is required")
-    .trim()
-    .isLength({ min: 3 })
-    .withMessage("Please enter a valid bank IBAN"),
+  // body("iban", "Bank IBAN is required")
+  //   .trim()
+  //   .isLength({ min: 3 })
+  //   .withMessage("Please enter a valid bank IBAN"),
 
-  body("swift", "Bank SWIFT is required")
-    .trim()
-    .isLength({ min: 3 })
-    .withMessage("Please enter a valid bank SWIFT"),
+  // body("swift", "Bank SWIFT is required")
+  //   .trim()
+  //   .isLength({ min: 3 })
+  //   .withMessage("Please enter a valid bank SWIFT"),
 
   // body('state', 'State is required')
   // 	.trim()
