@@ -11,7 +11,19 @@ async function debitAccessControl(req, res) {
   } else {
     const debit = await Debit.findById(dId).exec();
 
-    if (req.user.getBalance() < debit.amount) {
+    const sender = await Customer.findById(debit.issuer).exec();
+
+    if (!debit) {
+      req.flash("info", "Debit not found");
+      return res.redirect("/manage/home?view=debits");
+    }
+
+    if (!sender) {
+      req.flash("info", "Sender not found");
+      return res.redirect("/manage/home?view=debits");
+    }
+
+    if (sender.getBalance() < debit.amount) {
       req.flash(
         "info",
         "Client has insufficient balance, please credit client first"
@@ -21,16 +33,16 @@ async function debitAccessControl(req, res) {
 
     if (action === "approve") {
       debit.approved = true;
-      req.user.totalDebit += debit.amount;
+      sender.totalDebit += debit.amount;
       await new Notification({
-        listener: req.user._id,
+        listener: sender._id,
         description: `Debit of $${debit.amount} has been approved`,
       }).save();
     } else if (action === "revoke") {
       debit.approved = false;
-      req.user.totalDebit -= debit.amount;
+      sender.totalDebit -= debit.amount;
       await new Notification({
-        listener: req.user._id,
+        listener: sender._id,
         description: `Debit of $${debit.amount} has been revoked`,
       }).save();
     }
