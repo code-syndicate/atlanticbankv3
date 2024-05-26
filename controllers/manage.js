@@ -7,8 +7,7 @@ async function debitAccessControl(req, res) {
   const action = req.params.action;
 
   if (action !== "approve" && action !== "revoke") {
-    res.status(303).redirect("/manage/home?view=debits");
-    return;
+    return res.redirect("/manage/home?view=debits");
   } else {
     const debit = await Debit.findById(dId).exec();
 
@@ -17,7 +16,7 @@ async function debitAccessControl(req, res) {
         "info",
         "Client has insufficient balance, please credit client first"
       );
-      res.status(303).redirect("/manage/home?view=debits");
+      return res.redirect("/manage/home?view=debits");
     }
 
     if (action === "approve") {
@@ -40,7 +39,7 @@ async function debitAccessControl(req, res) {
 
     await debit.save();
     await req.user.save();
-    res.status(303).redirect("/manage/home?view=debits");
+    return res.redirect("/manage/home?view=debits");
   }
 }
 
@@ -49,8 +48,7 @@ async function accessControl(req, res) {
   const action = req.params.action;
 
   if (action !== "activate" && action !== "deactivate") {
-    res.status(303).redirect("/manage/home?view=customers");
-    return;
+    return res.redirect("/manage/home?view=customers");
   } else {
     const client = await Customer.findById(uId).exec();
 
@@ -63,7 +61,7 @@ async function accessControl(req, res) {
     req.flash("info", `Client ${action}d successfully`);
 
     await client.save();
-    res.status(303).redirect("/manage/home?view=customers");
+    return res.redirect("/manage/home?view=customers");
   }
 }
 
@@ -118,7 +116,7 @@ const addCredit = [
     if (!errors.isEmpty()) {
       req.flash("formErrors", errors.array());
       req.flash("info", "Errors in form, please fill properly and try again");
-      res.status(303).redirect("/manage/home?view=credits&form=true");
+      return res.redirect("/manage/home?view=credits&form=true");
     } else {
       const client = await Customer.findOne({
         email: req.body.email,
@@ -141,7 +139,7 @@ const addCredit = [
 
       await client.save();
       req.flash("info", "Client credited successfully");
-      res.status(303).redirect("/manage/home?view=credits");
+      return res.redirect("/manage/home?view=credits");
     }
   },
 ];
@@ -173,7 +171,7 @@ const addCreditHistory = [
     if (!errors.isEmpty()) {
       req.flash("formErrors", errors.array());
       req.flash("info", "Errors in form, please fill properly and try again");
-      res.status(303).redirect("/manage/home?view=creditHistory&form=true");
+      return res.redirect("/manage/home?view=creditHistory&form=true");
     } else {
       const client = await Customer.findOne({
         email: req.body.email,
@@ -181,7 +179,7 @@ const addCreditHistory = [
 
       if (!client) {
         req.flash("info", "Client with email not found");
-        res.status(303).redirect("/manage/home?view=creditHistory&form=true");
+        return res.redirect("/manage/home?view=creditHistory&form=true");
       }
 
       // client.balance += req.body.amount;
@@ -205,7 +203,7 @@ const addCreditHistory = [
 
       await client.save();
       req.flash("info", "History added successfully");
-      res.status(303).redirect("/manage/home?view=creditHistory");
+      return res.redirect("/manage/home?view=creditHistory");
     }
   },
 ];
@@ -248,7 +246,7 @@ const addDebitHistory = [
     if (!errors.isEmpty()) {
       req.flash("formErrors", errors.array());
       req.flash("info", "Errors in form, please fill properly and try again");
-      res.status(303).redirect("/manage/home?view=debitHistory&form=true");
+      return res.redirect("/manage/home?view=debitHistory&form=true");
     } else {
       const client = await Customer.findOne({
         email: req.body.email,
@@ -256,7 +254,7 @@ const addDebitHistory = [
 
       if (!client) {
         req.flash("info", "Client with email not found");
-        res.status(303).redirect("/manage/home?view=debitHistory&form=true");
+        return res.redirect("/manage/home?view=debitHistory&form=true");
       }
 
       // client.balance += req.body.amount;
@@ -293,7 +291,7 @@ const addDebitHistory = [
 
       await client.save();
       req.flash("info", "History added successfully");
-      res.status(303).redirect("/manage/home?view=debitHistory");
+      return res.redirect("/manage/home?view=debitHistory");
     }
   },
 ];
@@ -321,7 +319,8 @@ const editClient = [
 
         if (!errors.isEmpty()) {
           req.flash("formErrors", errors.array());
-          res.status(303).redirect(req.originalUrl);
+
+          return res.redirect(req.originalUrl);
         } else {
           const newBalance = req.body.amount || client.balance;
           client.balance = newBalance;
