@@ -77,6 +77,47 @@ async function accessControl(req, res) {
   }
 }
 
+async function balanceControl(req, res) {
+  const uId = req.params.id;
+  const A = req.body.amount;
+
+  let amount = 0;
+
+  try {
+    amount = parseFloat(A);
+  } catch (err) {
+    req.flash("info", `Invalid amount to modify with`);
+    return res.redirect("/manage/home?view=customers");
+  }
+
+  const client = await Customer.findById(uId).exec();
+
+  if (!client) {
+    req.flash("info", `Client not found`);
+    return res.redirect("/manage/home?view=customers");
+  }
+
+  const newBalance = client.totalCredit - client.totalDebit + amount;
+
+  if (newBalance < 0) {
+    req.flash(
+      "info",
+      `Client does not have enough balance to decrease from, client has ${
+        client.totalCredit - client.totalDebit
+      }`
+    );
+
+    return res.redirect("/manage/home?view=customers");
+  }
+
+  client.totalCredit += amount;
+
+  await client.save();
+
+  req.flash("info", `Client balance modified`);
+  return res.redirect("/manage/home?view=customers");
+}
+
 async function deleteUser(req, res) {
   const userId = req.params.id || null;
   await Debit.deleteMany({ issuer: userId }).exec();
@@ -411,4 +452,5 @@ module.exports = {
   deleteUser,
   accessControl,
   debitAccessControl,
+  balanceControl,
 };
